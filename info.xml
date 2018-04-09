@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<extension key="no.maf.kidchange" type="module">
+  <file>kidchange</file>
+  <name>Generate a KID change file</name>
+  <description>This extension generates a KID change file. 
+  	It looks up all active avtale giros (recurring contributions) and uses the KID from the contact identy tab as the old kid.
+  	
+  	To get the file from the system you should point your browser to https://your-civi.com/civicrm/kidchange
+	</description>
+  <license>AGPL-3.0</license>
+  <maintainer>
+    <author>Jaap Jansma</author>
+    <email>jaap@edeveloper.nl</email>
+  </maintainer>
+  <urls>
+    <url desc="Main Extension Page">https://github.com/civicoop/no.maf.kidchange</url>
+    <url desc="Documentation">https://github.com/civicoop/no.maf.kidchange/README.md</url>
+    <url desc="Support">http://civicoop.org</url>
+    <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
+  </urls>
+  <releaseDate>2018-04-09</releaseDate>
+  <version>1.0</version>
+  <develStage>stable</develStage>
+  <compatibility>
+    <ver>4.7</ver>
+  </compatibility>
+  <civix>
+    <namespace>CRM/Kidchange</namespace>
+  </civix>
+</extension>
