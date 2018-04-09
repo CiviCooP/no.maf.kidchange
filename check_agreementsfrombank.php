@@ -52,9 +52,9 @@ for($i=2; $i < (count($lines)-2); $i++) {
 					$notificationToBankQuery = false;
 				}
 				if ($notificationToBankQuery) {
-					if ($notificationToBank['notification_to_bank'] == '0' && $notificationToBank == 'J') {
+					if ($notificationToBank['notification_for_bank'] == '0' && $notificationToBank == 'J') {
 						echo "Line {$lineNr}: Notification to bank should be YES according to the bank for KID Number {$kidNumber}\n";	
-					} elseif ($notificationToBank['notification_to_bank'] == '1' && $notificationToBank == 'N') {
+					} elseif ($notificationToBank['notification_for_bank'] == '1' && $notificationToBank == 'N') {
 						echo "Line {$lineNr}: Notification to bank should be NO according to the bank for KID Number {$kidNumber}\n";	
 					}
 				}	else {
