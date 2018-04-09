@@ -44,7 +44,7 @@ for($i=2; $i < (count($lines)-2); $i++) {
 					from civicrm_kid_number kid  
 					inner join civicrm_contribution ON kid.entity = 'Contribution'  and kid.entity_id = civicrm_contribution.id 
 					inner join civicrm_contribution_recur_offline recur_off on civicrm_contribution.contribution_recur_id = recur_off.recur_id
-					WHERE kid.kid_number = '{$kid_number}'"
+					WHERE kid.kid_number = '{$kidNumber}'"
 				);
 				if ($notificationToBankQuery->execute()) {
 					$notificationToBankQuery = $notificationToBankQuery->fetch();
