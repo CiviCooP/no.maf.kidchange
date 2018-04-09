@@ -52,20 +52,20 @@ for($i=2; $i < (count($lines)-2); $i++) {
 					$notificationToBankQuery = false;
 				}
 				if ($notificationToBankQuery) {
-					if ($notificationToBank['notification_for_bank'] == '0' && $notificationToBank == 'J') {
-						echo "Line {$lineNr}: Notification to bank should be YES according to the bank for KID Number {$kidNumber}\n";	
-					} elseif ($notificationToBank['notification_for_bank'] == '1' && $notificationToBank == 'N') {
-						echo "Line {$lineNr}: Notification to bank should be NO according to the bank for KID Number {$kidNumber}\n";	
+					if ($notificationToBankQuery['notification_for_bank'] == '0' && $notificationToBank == 'J') {
+						echo "Line {$lineNr}: Notification to bank should be YES according to the bank for KID Number {$kidNumber} and Contact ID {$contact_id}\n";	
+					} elseif ($notificationToBankQuery['notification_for_bank'] == '1' && $notificationToBank == 'N') {
+						echo "Line {$lineNr}: Notification to bank should be NO according to the bank for KID Number {$kidNumber} and Contact ID {$contact_id}\n";	
 					}
 				}	else {
-					echo "Line {$lineNr}: No recurring contribution found for KID Number {$kidNumber}\n";	
+					echo "Line {$lineNr}: No recurring contribution found for KID Number {$kidNumber} and Contact ID {$contact_id}\n";	
 				}
 			} elseif ($contactQuery && $contactQuery['is_deleted'] == 1) {
-				echo "Line {$lineNr}: Contact with KID Number {$kidNumber} is marked as deleted\n";	
+				echo "Line {$lineNr}: Contact {$contact_id} with KID Number {$kidNumber} is marked as deleted\n";	
 			} elseif ($contactQuery && $contactQuery['is_deceased'] == 1) {
-				echo "Line {$lineNr}: Contact with KID Number {$kidNumber} is marked as deceased\n";	
+				echo "Line {$lineNr}: Contact {$contact_id} with KID Number {$kidNumber} is marked as deceased\n";	
 			} else {
-				echo "Line {$lineNr}: Contact with KID Number {$kidNumber} does not exist in system\n";
+				echo "Line {$lineNr}: Contact {$contact_id} with KID Number {$kidNumber} does not exist in system\n";
 			}
 		} else {
 			echo "Line {$lineNr}: KID Number {$kidNumber} does not exist in system\n";
