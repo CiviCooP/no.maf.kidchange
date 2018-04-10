@@ -53,7 +53,9 @@ for($i=2; $i < (count($lines)-2); $i++) {
 					$notificationToBankQuery = false;
 				}
 				if ($notificationToBankQuery) {
-					if ($notificationToBankQuery['notification_for_bank'] == '0' && $notificationToBank == 'J') {
+					if ($notificationToBankQuery['payment_type_id'] != 2) {
+						echo "Line {$lineNr}: Payment type is not avtale giro for KID Number {$kidNumber} and Contact ID {$contact_id}\n";
+					} elseif ($notificationToBankQuery['notification_for_bank'] == '0' && $notificationToBank == 'J') {
 						echo "Line {$lineNr}: Notification to bank should be YES according to the bank for KID Number {$kidNumber} and Contact ID {$contact_id}\n";	
 					} elseif ($notificationToBankQuery['notification_for_bank'] == '1' && $notificationToBank == 'N') {
 						echo "Line {$lineNr}: Notification to bank should be NO according to the bank for KID Number {$kidNumber} and Contact ID {$contact_id}\n";	
