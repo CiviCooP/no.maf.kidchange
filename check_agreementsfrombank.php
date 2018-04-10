@@ -20,10 +20,11 @@ for($i=2; $i < (count($lines)-2); $i++) {
 	try {
 		$lineNr = $i + 1; // line number in the file
 		$kidNumber = trim(substr($lines[$i], 16, 25));
+		$kidBaseNumber = substr($kidNumber,0,6);
 		$notificationToBank = substr($lines[$i], 41, 1);
 		
 		// check whether KID number exist in the system
-		$kidExistsQuery = $cnxn->query("SELECT * FROM civicrm_kid_number WHERE kid_number = {$kidNumber}");
+		$kidExistsQuery = $cnxn->query("SELECT * FROM civicrm_value_kid_base WHERE kid_base = {$kidBaseNumber}");
 		if ($kidExistsQuery->execute()) {
 			$kidExistsQuery = $kidExistsQuery->fetch();
 		} else {
@@ -31,7 +32,7 @@ for($i=2; $i < (count($lines)-2); $i++) {
 		}
 		if ($kidExistsQuery) {
 			// Check whether the contact exists and is not deleted nor deceased
-			$contact_id = $kidExistsQuery['contact_id'];
+			$contact_id = $kidExistsQuery['entity_id'];
 			$contactQuery = $cnxn->query("SELECT * FROM civicrm_contact WHERE id = {$contact_id}");
 			if ($contactQuery->execute()) {
 				$contactQuery = $contactQuery->fetch();
@@ -44,7 +45,7 @@ for($i=2; $i < (count($lines)-2); $i++) {
 					from civicrm_kid_number kid  
 					inner join civicrm_contribution ON kid.entity = 'Contribution'  and kid.entity_id = civicrm_contribution.id 
 					inner join civicrm_contribution_recur_offline recur_off on civicrm_contribution.contribution_recur_id = recur_off.recur_id
-					WHERE kid.kid_number = '{$kidNumber}'"
+					WHERE kid.kid_number LIKE '{$kidBaseNumber}%'"
 				);
 				if ($notificationToBankQuery->execute()) {
 					$notificationToBankQuery = $notificationToBankQuery->fetch();
