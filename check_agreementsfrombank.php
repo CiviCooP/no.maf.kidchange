@@ -5,6 +5,7 @@ $dbUser = $argv[1];
 $dbPass = $argv[2];
 $db = $argv[3];
 $file = $argv[4];
+$correct_data = (isset($argv[5]) && $argv[5] == '--correct-data') ? true : false; 
 $dsn = "mysql:dbname={$db};host=127.0.0.1";
 
 $cnxn = new PDO($dsn, $dbUser, $dbPass);
@@ -56,9 +57,17 @@ for($i=2; $i < (count($lines)-2); $i++) {
 					if ($notificationToBankQuery['payment_type_id'] != 2) {
 						echo "Line {$lineNr}: Payment type is not avtale giro for KID Number {$kidNumber} and Contact ID {$contact_id}\n";
 					} elseif ($notificationToBankQuery['notification_for_bank'] == '0' && $notificationToBank == 'J') {
-						echo "Line {$lineNr}: Notification to bank should be YES according to the bank for KID Number {$kidNumber} and Contact ID {$contact_id}\n";	
+						if ($correct_data) {
+							$cnxn->exec("UPDATE civicrm_contribution_recur_offline SET notification_for_bank = '1' WHERE recur_id = '{$notificationToBankQuery['recur_id']}'");	
+						} else {
+							echo "Line {$lineNr}: Notification to bank should be YES according to the bank for KID Number {$kidNumber} and Contact ID {$contact_id}\n";
+						}	
 					} elseif ($notificationToBankQuery['notification_for_bank'] == '1' && $notificationToBank == 'N') {
-						echo "Line {$lineNr}: Notification to bank should be NO according to the bank for KID Number {$kidNumber} and Contact ID {$contact_id}\n";	
+						if ($correct_data) {
+							$cnxn->exec("UPDATE civicrm_contribution_recur_offline SET notification_for_bank = '0' WHERE recur_id = '{$notificationToBankQuery['recur_id']}'");	
+						} else {
+							echo "Line {$lineNr}: Notification to bank should be NO according to the bank for KID Number {$kidNumber} and Contact ID {$contact_id}\n";
+						}	
 					}
 				}	else {
 					echo "Line {$lineNr}: No recurring contribution found for KID Number {$kidNumber} and Contact ID {$contact_id}\n";	
