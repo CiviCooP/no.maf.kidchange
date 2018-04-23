@@ -15,7 +15,7 @@ if (!$cnxn) {
 $cnxn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Find all Active Avtale Giro agreements
-$stmnt = $cnxn->query("SELECT sdd.reference, r.* FROM maf_civicrm.civicrm_contribution_recur r
+$stmnt = $cnxn->query("SELECT sdd.reference, r.* FROM civicrm_contribution_recur r
 inner join civicrm_sdd_mandate sdd ON sdd.entity_id = r.id and sdd.entity_table = 'civicrm_contribution_recur'
 where sdd.is_enabled = 1 and (r.end_date is null or r.end_date >= now());");
 $activeMandates = array();
@@ -34,7 +34,7 @@ for($i=2; $i < (count($lines)-2); $i++) {
     $contact_id = (int) substr($kidNumber, 0, 7);
     $notificationToBank = substr($lines[$i], 41, 1);
     
-    $stmnt = $cnxn->prepare("SELECT sdd.reference, r.* FROM maf_civicrm.civicrm_contribution_recur r
+    $stmnt = $cnxn->prepare("SELECT sdd.reference, r.* FROM civicrm_contribution_recur r
 inner join civicrm_sdd_mandate sdd ON sdd.entity_id = r.id and sdd.entity_table = 'civicrm_contribution_recur'
 where sdd.is_enabled = 1 and (r.end_date is null or r.end_date >= now()) AND r.contact_id = :contact_id and r.campaign_id = :campaign_id");
     $stmnt->execute(array('contact_id' => $contact_id, 'campaign_id' => $campaign_id));
